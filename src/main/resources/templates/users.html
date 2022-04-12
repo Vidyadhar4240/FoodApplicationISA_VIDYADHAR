@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Code Login Java</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+</head>
+<body>
+    <div class="container text-center">
+        <div>
+            <form th:action="@{/logout}" method="post">
+                <p>
+                    Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
+                </p>
+                <input type="submit" value="Sign Out">
+            </form>
+        </div>
+        <div>
+            <h3>List of All Users</h3>
+        </div>
+        <div>
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>UserId</th>
+                        <th>UserEmail</th>
+                        <th>FirstName</th>
+                        <th>LastName</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user: ${listUsers}">
+                        <td th:text="${user.id}">User Id</td>
+                        <td th:text="${user.email}">Email</td>
+                        <td th:text="${user.firstName}">First Name</td>
+                        <td th:text="${user.lastName}">Last Name</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

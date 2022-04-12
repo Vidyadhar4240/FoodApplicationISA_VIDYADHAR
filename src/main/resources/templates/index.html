@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Code Login Java</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+</head>
+<body>
+<div class="container text-center">
+    <div>
+        <h1>Welcome to Login page please click below to register</h1>
+    </div>
+    <div>
+        <h3><a th:href="@{/list_users}">List all Users</a></h3>
+        <h3><a th:href="@{/register}">Register</a></h3>
+        <h3><a th:href="@{/login}">Login</a></h3></h3>
+    </div>
+</div>
+</body>
+</html>
