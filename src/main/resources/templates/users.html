@@ -11,10 +11,13 @@
             <form th:action="@{/logout}" method="post">
                 <p>
                     Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
+
                 </p>
                 <input type="submit" value="Sign Out">
             </form>
+            <h3><a th:href="@{'/edit/' + ${user.id}}">Edit User Details</a></h3>
         </div>
+
         <div>
             <h3>List of All Users</h3>
         </div>
@@ -37,6 +40,9 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div>
+            <h3><a th:href="@{/list_restaurants}">List of Restaurants</a></h3>
         </div>
     </div>
 </body>

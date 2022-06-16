@@ -1,19 +1,36 @@
 package com.loginregister.logincodejavanet;
 
+import com.loginregister.logincodejavanet.RestaurantDishes.Menu;
+import com.loginregister.logincodejavanet.RestaurantDishes.MenuRepository;
+import com.loginregister.logincodejavanet.orders.Order;
+import com.loginregister.logincodejavanet.orders.OrderRepository;
+import com.loginregister.logincodejavanet.restaurantdetails.Restaurant;
+import com.loginregister.logincodejavanet.restaurantdetails.RestaurantRepository;
+import net.bytebuddy.implementation.bytecode.ShiftRight;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AppController {
 
     @Autowired
     private UserRepository userRepo;
+    @Autowired
+    private OrderRepository orderRepo;
+
+    @Autowired
+    private RestaurantRepository restaurantRepo;
+
+    @Autowired
+    private MenuRepository menuRepo;
 
     @GetMapping("")
     public String viewHomePage() {
@@ -35,10 +52,48 @@ public class AppController {
         return "register_success";
     }
 
-    @GetMapping("/list_users")
-    public String listAllUsers(Model model) {
-        List<User> listUsers = userRepo.findAll();
-        model.addAttribute("listUsers", listUsers);
-        return "users";
+    @RequestMapping(value = "/list_users", method = RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView listAllUsers(Model model, Principal principal) {
+//        List<User> listUsers = (List<User>) userRepo.findAll();
+        String email = principal.getName();
+        User newUser = userRepo.findByEmail(email);
+        model.addAttribute("listUsers", newUser);
+        ModelAndView modelAndView = new ModelAndView("users");
+        ModelAndView mav = modelAndView;
+        mav.addObject("user", newUser);
+        return mav;
+    }
+    @RequestMapping("/edit/{id}")
+    public ModelAndView showEditUserPage(@PathVariable(name = "id") Long id) {
+        ModelAndView mav = new ModelAndView("edit_user");
+        Optional<User> user = userRepo.findById(id);
+        mav.addObject("user", user);
+        return mav;
+    }
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public String saveUser(@ModelAttribute("user") User user) {
+        userRepo.save(user);
+        return "index";
+    }
+
+    @GetMapping("/list_restaurants")
+    public String listRestaurants(Model model) {
+        List<Restaurant> restaurantList = restaurantRepo.findAll();
+        model.addAttribute("restaurantList", restaurantList);
+        return "restaurants_list";
+    }
+
+//    @GetMapping("/list_menu/{id}")
+//    public String listMenu(Model model) {
+//        Long id;
+//        List<Menu> menuList = menuRepo.findById(id)
+//    }
+
+    @RequestMapping(value = "/saveOrder", method = RequestMethod.POST)
+    public String saveOrder(@ModelAttribute("order") Order order) {
+        orderRepo.save(order);
+        return "index";
     }
 }
