@@ -13,29 +13,12 @@ public class Restaurant {
     @Column(name = "restaurant_id")
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "restaurant")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Menu.class)
+    @JoinColumn(name = "fk_restaurant_id", referencedColumnName = "restaurant_id")
     private Set<Menu> menuSet;
 
     @Column(name = "name")
     private String name;
-
-//    @OneToOne(orphanRemoval = true)
-//    @JoinTable(name = "menu",
-//            joinColumns = @JoinColumn(name = "restaurant_id"),
-//            inverseJoinColumns = @JoinColumn(name = "menu_id"))
-
-//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-//    @JoinColumn(name = "restaurant_id")
-
-//    @OneToOne(mappedBy = "restaurant")
-//    private Menu menu;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "restaurant_id")
-//    private Menu restaurant_id;
-//    @OneToMany(cascade=CascadeType.ALL)
-//    @JoinColumn(name="restaurant_id")
-//    private Set<Menu> menuSet;
 
     public Long getId() {
         return id;

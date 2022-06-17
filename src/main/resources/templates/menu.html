@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Code Login Java</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+</head>
+<body>
+<div class="container text-center">
+    <div>
+        <form th:action="@{/logout}" method="post">
+            <p>
+                Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
+            </p>
+            <input type="submit" value="Sign Out">
+        </form>
+    </div>
+
+    <div>
+        <h3>Menu of the restaurant</h3>
+    </div>
+    <div>
+        <form th:action="@{/saveOrder}" th:object="${order}" method="post">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>Dish Id</th>
+                <th>Dish Name</th>
+                <th>Dish Price</th>
+                <th>Select Dish</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="menu,iter: ${menuList}">
+<!--                <td th:text="${menu.id}" th:name="|orderItemSet[${iter.index}].menuId|">Dish Id</td>-->
+                <td th:text="${menu.id}" name="orderItemSet[__${iter.index}__].menuId">Dish Id</td>
+                <td th:text="${menu.name}">Dish Name</td>
+                <td th:text="${menu.price}">Dish Price</td>
+                <td><input type="checkbox" th:value="${menu.id}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div>
+            <input type="hidden" name="userId" value="18"/>
+        </div>
+        <div class="field">
+            <button class="ui button" type="submit">Order Now</button>
+        </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

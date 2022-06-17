@@ -6,7 +6,6 @@ import com.loginregister.logincodejavanet.orders.Order;
 import com.loginregister.logincodejavanet.orders.OrderRepository;
 import com.loginregister.logincodejavanet.restaurantdetails.Restaurant;
 import com.loginregister.logincodejavanet.restaurantdetails.RestaurantRepository;
-import net.bytebuddy.implementation.bytecode.ShiftRight;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -85,11 +84,13 @@ public class AppController {
         return "restaurants_list";
     }
 
-//    @GetMapping("/list_menu/{id}")
-//    public String listMenu(Model model) {
-//        Long id;
-//        List<Menu> menuList = menuRepo.findById(id)
-//    }
+    @GetMapping("/list_menu/{id}")
+    public String listMenu(Model model, @PathVariable(name = "id") Long restaurant_id) {
+        System.out.println(restaurant_id);
+        List<Menu> menuList = menuRepo.findAllByRestaurantId(restaurant_id);
+        model.addAttribute("menuList", menuList);
+        return "menu";
+    }
 
     @RequestMapping(value = "/saveOrder", method = RequestMethod.POST)
     public String saveOrder(@ModelAttribute("order") Order order) {

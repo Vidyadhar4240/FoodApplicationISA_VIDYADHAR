@@ -21,6 +21,16 @@ public class Order {
     @Column(name = "user_id")
     private int userId;
 
+    private boolean isSelected;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
     public int getOrderId() {
         return orderId;
     }

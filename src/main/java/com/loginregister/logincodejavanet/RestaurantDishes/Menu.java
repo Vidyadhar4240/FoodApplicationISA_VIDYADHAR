@@ -9,12 +9,8 @@ import javax.persistence.*;
 public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "menu_id")
     private Long id;
-
-//    @OneToOne(fetch = FetchType.LAZY, mappedBy = "restaurant_id")
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "restaurant_id", referencedColumnName = "restaurant_id")
-//    private Restaurant restaurant_id;
 
     @Column(length = 256)
     private String name;
